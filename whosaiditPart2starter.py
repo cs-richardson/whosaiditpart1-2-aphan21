@@ -16,7 +16,7 @@ def normalize(word):
 # whose keys are the unique words in the file and whose
 # values are the counts for those words.
 def get_counts(filename):
-    result_dict = {}
+    result_dict = {"_total": 0}
     text = open(filename, 'r')
     text = text.read()
     text = text.split()
@@ -26,12 +26,15 @@ def get_counts(filename):
             result_dict[word] = 1
         elif word in result_dict:
             result_dict[word] = result_dict[word] + 1
+        result_dict["_total"] = result_dict["_total"] + 1
     return result_dict
 
 # Get the counts for the two shortened versions
 # of the texts
 shakespeare_counts = get_counts("hamlet.txt")
 austen_counts = get_counts("pride-and-prejudice.txt")
+del austen_counts[""]
+austen_counts["_total"] = austen_counts["_total"] - 1
 
 # Check the contents of the dictionaries
 for key in shakespeare_counts:
